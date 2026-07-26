@@ -15,6 +15,7 @@ if [[ "$os" == Linux ]]; then
     [[ -z "$dev" ]] && none
 
     percentage=$(upower -i $dev 2>/dev/null | awk '/percentage/ { print $2 }' | tr -d '%')
+    state=$(upower -i "$dev" 2>/dev/null | awk '/state/ { print $2 }')
 else
     # Assume OSX
     percentage=$(pmset -g batt | grep InternalBattery-0 | awk '{print $3}' | tr -d '%;')
@@ -38,4 +39,17 @@ bg=$(< "../term-colors/background.txt")
 (( percentage >= 40 )) && fg=226 # yellow
 (( percentage >= 80 )) && fg=112 # green
 
-echo -ne "#[fg=colour$fg,bg=colour$bg]$prefix$percentage%"
+case "$state" in
+    discharging|pending-discharge)
+        icon="🔋"
+        ;;
+    charging|fully-charged|pending-charge)
+        icon="🔌"
+        #icon="⚡"
+        ;;
+    *)
+        icon="?"
+        ;;
+esac
+
+echo -ne "#[fg=colour$fg,bg=colour$bg]$icon $prefix$percentage%"
