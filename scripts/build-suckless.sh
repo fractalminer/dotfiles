@@ -3,7 +3,7 @@ set -e
 set -o pipefail
 
 cd ~/dev
-[[ ! -d suckless ]] && git clone ssh://git@github.com/dpacbach/suckless
+[[ ! -d suckless ]] && git clone ssh://git@github.com/fractalminer/suckless
 
 cd ~/dev/suckless
 make
