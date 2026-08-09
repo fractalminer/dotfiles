@@ -54,8 +54,6 @@ main() {
         alsoftrc
         bashrc
         config/alacritty
-        config/awesome/autorun.sh
-        config/awesome/rc.lua
         config/bat
         config/compton.conf
         config/fish

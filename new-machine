@@ -62,8 +62,8 @@ clone_impl() {
   git clone ssh://git@github.com/$org/$repo $where --recursive
 }
 
-clone()    { clone_impl no-more-secrets "$@"; }
-clone_rn() { clone_impl revolution-now  "$@"; }
+clone()    { clone_impl fractalminer   "$@"; }
+clone_rn() { clone_impl revolution-now "$@"; }
 
 echo "Cloning dotfiles repo; should be passwordless."
 cd ~

@@ -119,26 +119,33 @@ sudo apt install $list --yes
 # ---------------------------------------------------------------
 # Lua
 # ---------------------------------------------------------------
-rocks="
+rocks='
+    ftcsv
     luaposix
     lunajson
-    ftcsv
-"
+    redis-lua
+'
 
 luarocks config lua_version 5.4
-
-for rock in $rocks; do
-    echo "installing luarock: $rock"
-    luarocks install "$rock" --local
-done
 
 lua_v_cmd="sudo update-alternatives --set lua-interpreter /usr/bin/lua5.4"
 echo "setting lua version..."
 echo "$lua_v_cmd"
 $lua_v_cmd
 
+for rock in $rocks; do
+    echo "installing luarock: $rock"
+    luarocks install "$rock" --local
+done
+
 # ---------------------------------------------------------------
 # Python
 # ---------------------------------------------------------------
-pip3 install --user \
-  spotipy  # For the spotify playlist sync script.
+pips='
+  spotipy
+'
+
+for pip in $pips; do
+    echo "installing python package: $pip"
+    pip3 install --user "$pip"
+done
