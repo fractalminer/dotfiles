@@ -120,24 +120,8 @@ sudo apt install $list --yes
 # ---------------------------------------------------------------
 # Lua
 # ---------------------------------------------------------------
-rocks='
-    ftcsv
-    luaposix
-    lunajson
-    redis-lua
-'
-
-luarocks config lua_version 5.4
-
-lua_v_cmd="sudo update-alternatives --set lua-interpreter /usr/bin/lua5.4"
-echo "setting lua version..."
-echo "$lua_v_cmd"
-$lua_v_cmd
-
-for rock in $rocks; do
-    echo "installing luarock: $rock"
-    luarocks install "$rock" --local
-done
+echo "running install-luarocks.sh..."
+./install-luarocks.sh
 
 # ---------------------------------------------------------------
 # Python
