@@ -23,6 +23,7 @@ list="
     fd-find
     feh
     fish
+    flatpak
     flex
     fluid-soundfont-gm
     fluidsynth
@@ -122,6 +123,12 @@ sudo apt install $list --yes
 # ---------------------------------------------------------------
 echo "running install-luarocks.sh..."
 ./install-luarocks.sh
+
+# ---------------------------------------------------------------
+# Flatpak
+# ---------------------------------------------------------------
+echo "running install-flatpaks.sh..."
+./install-flatpaks.sh
 
 # ---------------------------------------------------------------
 # Python
