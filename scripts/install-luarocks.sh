@@ -12,6 +12,7 @@ rocks='
   luaposix
   lunajson
   redis-lua
+  lua-zlib
 '
 
 luarocks config lua_version "$lua_version"
