@@ -11,6 +11,7 @@ rocks='
   ftcsv
   luaposix
   lunajson
+  minicurses
   redis-lua
   lua-zlib
 '
