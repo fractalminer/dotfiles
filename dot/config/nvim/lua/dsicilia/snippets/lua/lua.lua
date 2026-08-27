@@ -67,7 +67,7 @@ add_s{
 -- component of the thing being aliased and will use it to name
 -- the alias.
 add_s{
-  '=ali', fmt( 'local {} = {}',
+  '=ali', fmt( 'local {} = assert( {} )',
                { f( wrapf( required_last ), { 1 } ), i( 1 ) } ),
 }
 
