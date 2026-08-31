@@ -199,15 +199,6 @@ log "Creating recycle symlink."
 [[ ! -L ~/bin/recycle ]] && ln -s ~/dev/utilities/misc/recycle ~/bin/recycle
 
 # ---------------------------------------------------------------
-# Cleaning up tmp files.
-# ---------------------------------------------------------------
-echo 'Insert this into the root crontab to clean the tmp folder:'
-echo '30 11 * * * find /tmp -type f -atime +10 -delete'
-echo
-echo 'Press enter when done...'
-read
-
-# ---------------------------------------------------------------
 # rsync from source host.
 # ---------------------------------------------------------------
 rsync_folder() {
@@ -222,6 +213,15 @@ rsync_folder() {
 rsync_folder ~/dev/tools
 rsync_folder ~/bin
 rsync_folder ~/.local/share/nvim
+
+# ---------------------------------------------------------------
+# Cleaning up tmp files.
+# ---------------------------------------------------------------
+echo 'Insert this into the root crontab to clean the tmp folder:'
+echo '30 11 * * * find /tmp -type f -atime +10 -delete'
+echo
+echo 'Press enter when done...'
+read
 
 # ---------------------------------------------------------------
 # Finished.
