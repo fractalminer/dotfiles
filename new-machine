@@ -29,20 +29,18 @@ mkdir -p ~/.ssh
 chmod 700 ~/.ssh
 
 hostname='thelio'
-server=192.168.1.214
+template_host_ip=192.168.1.214
 
-echo "Attempting to contact $server (may be known as $hostname)"
+echo "Attempting to contact $template_host_ip (may be known as $hostname)"
 echo "for SSH keys.  Pinging..."
-ping -c1 -q $server
+ping -c1 -q $template_host_ip
 
 echo "Host $hostname is responding; you will now be asked for"
-echo "$server's ssh password twice."
+echo "$template_host_ip's ssh password twice."
 
-[[ ! -f ~/.ssh/id_rsa     ]] && scp dsicilia@$server:/home/dsicilia/.ssh/id_rsa ~/.ssh
-[[ ! -f ~/.ssh/id_rsa.pub ]] && scp dsicilia@$server:/home/dsicilia/.ssh/id_rsa.pub ~/.ssh
-[[ ! -f ~/.ssh/config ]]     && scp dsicilia@$server:/home/dsicilia/.ssh/config ~/.ssh
-
-server=linode
+[[ ! -f ~/.ssh/id_rsa     ]] && scp dsicilia@$template_host_ip:/home/dsicilia/.ssh/id_rsa ~/.ssh
+[[ ! -f ~/.ssh/id_rsa.pub ]] && scp dsicilia@$template_host_ip:/home/dsicilia/.ssh/id_rsa.pub ~/.ssh
+[[ ! -f ~/.ssh/config ]]     && scp dsicilia@$template_host_ip:/home/dsicilia/.ssh/config ~/.ssh
 
 # ---------------------------------------------------------------
 # Install git.
@@ -60,6 +58,7 @@ clone_impl() {
   [[ -z "$where" ]] && where="$repo"
   [[ -d "$where" ]] && return 0
   git clone ssh://git@github.com/$org/$repo $where --recursive
+  (cd "$where" && fish -c add-gitlab)
 }
 
 clone()    { clone_impl fractalminer   "$@"; }
@@ -72,6 +71,13 @@ clone dotfiles .dotfiles
 cd ~/.dotfiles
 git pull origin master
 git submodule update --init
+
+# ---------------------------------------------------------------
+# Install Packages.
+# ---------------------------------------------------------------
+echo "Installing packages."
+cd ~/.dotfiles
+scripts/install-packages.sh
 
 # ---------------------------------------------------------------
 # Create dev folder and contents.
@@ -101,7 +107,7 @@ source ~/dev/utilities/bashlib/util.sh
 # VNC
 # ---------------------------------------------------------------
 mkdir -p ~/.vnc
-[[ ! -f ~/.vnc/passwd ]] && scp dsicilia@$server:/home/dsicilia/.vnc/passwd ~/.vnc/
+[[ ! -f ~/.vnc/passwd ]] && scp dsicilia@$linode:/home/dsicilia/.vnc/passwd ~/.vnc/
 
 # ---------------------------------------------------------------
 # Setup cmc
@@ -116,13 +122,6 @@ mkdir -p ~/.ccache
 if [[ ! -e ~/.ccache/ccache.conf ]]; then
   echo 'max_size = 100.0G' > ~/.ccache/ccache.conf
 fi
-
-# ---------------------------------------------------------------
-# Install Packages.
-# ---------------------------------------------------------------
-log "Installing packages."
-cd ~/.dotfiles
-scripts/install-packages.sh
 
 # ---------------------------------------------------------------
 # redis
@@ -209,16 +208,20 @@ echo 'Press enter when done...'
 read
 
 # ---------------------------------------------------------------
-# Building starts.
+# rsync from source host.
 # ---------------------------------------------------------------
-echo
-log 'Finished setup, press enter to begin building tools...'
-read
+rsync_folder() {
+  local dir="$1"
+  [[ -d "$dir" ]]
+  dir="$(realpath "$dir")"
+  echo "rsyncing folder $dir..."
+  cd "$dir"
+  rsync -avzP "dsicilia@$template_host_ip:$dir/" "$dir/"
+}
 
-# ---------------------------------------------------------------
-# Run build scripts.
-# ---------------------------------------------------------------
-~/dev/utilities/building/new-machine.sh
+rsync_folder ~/dev/tools
+rsync_folder ~/bin
+rsync_folder ~/.local/share/nvim
 
 # ---------------------------------------------------------------
 # Finished.
