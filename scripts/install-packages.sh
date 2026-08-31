@@ -121,13 +121,13 @@ sudo apt install $list --yes
 # Lua
 # ---------------------------------------------------------------
 echo "running install-luarocks.sh..."
-./install-luarocks.sh
+./scripts/install-luarocks.sh
 
 # ---------------------------------------------------------------
 # Flatpak
 # ---------------------------------------------------------------
 echo "running install-flatpaks.sh..."
-./install-flatpaks.sh
+./scripts/install-flatpaks.sh
 
 # ---------------------------------------------------------------
 # Python
