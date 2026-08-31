@@ -29,7 +29,7 @@ mkdir -p ~/.ssh
 chmod 700 ~/.ssh
 
 hostname='thelio'
-server=192.168.1.149
+server=192.168.1.214
 
 echo "Attempting to contact $server (may be known as $hostname)"
 echo "for SSH keys.  Pinging..."
