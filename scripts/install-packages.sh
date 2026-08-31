@@ -103,7 +103,6 @@ list="
     subversion
     tigervnc-common
     tigervnc-viewer
-    tlp
     tmux
     tree
     vim
