@@ -97,6 +97,7 @@ clone    haskell
 clone    utilities
 clone    suckless
 clone    moonlib
+clone    redist
 
 # ---------------------------------------------------------------
 # Source bashlib

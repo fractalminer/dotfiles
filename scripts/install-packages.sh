@@ -56,6 +56,7 @@ list="
     libsqlite3-0
     libsqlite3-dev
     libssl-dev
+    libstdc++-12-dev
     libtbb-dev
     libtool
     libtool-bin
