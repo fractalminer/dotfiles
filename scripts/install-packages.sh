@@ -8,6 +8,7 @@ list="
     automake
     bat
     bison
+    btop
     build-essential
     cargo
     ccache
