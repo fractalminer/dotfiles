@@ -107,6 +107,7 @@ list="
     tmux
     tree
     vim
+    wakeonlan
     wget
     xclip
     xdotool
