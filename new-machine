@@ -129,7 +129,7 @@ source ~/dev/utilities/bashlib/util.sh
 # VNC
 # ---------------------------------------------------------------
 mkdir -p ~/.vnc
-[[ ! -f ~/.vnc/passwd ]] && scp dsicilia@$linode:/home/dsicilia/.vnc/passwd ~/.vnc/
+[[ ! -f ~/.vnc/passwd ]] && scp dsicilia@linode:/home/dsicilia/.vnc/passwd ~/.vnc/
 
 # ---------------------------------------------------------------
 # Setup cmc
@@ -149,11 +149,6 @@ fi
 # redis
 # ---------------------------------------------------------------
 mkdir -p ~/.local/state/redis
-
-# In the event we apt installed redis for the first time, for
-# some reason the server auto starts under root, which we don't
-# want.
-sudo systemctl disable --now redis-server
 
 # ---------------------------------------------------------------
 # Build Hexagon.
@@ -236,6 +231,8 @@ rsync_folder() {
   cd "$dir"
   rsync -avzP "dsicilia@$template_host_ip:$dir/" "$dir/"
 }
+
+mkdir -p ~/.local/share/nvim
 
 rsync_folder ~/dev/tools
 rsync_folder ~/bin

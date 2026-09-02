@@ -20,8 +20,8 @@ source ~/.bashrc; check 'source new .bashrc'
 bash scripts/rebuild.sh "$@"; check 'rebuild and/or update components'
 
 # Set terminal colors (probably assumes GNOME terminal).
-#[[ $(uname) == Linux ]] &&
-# { bash term-colors/set-gnome-terminal-colors.sh; check 'set terminal colors'; }
+[[ $(uname) == Linux ]] &&
+ { bash term-colors/set-gnome-terminal-colors.sh; check 'set terminal colors'; }
 
 # Exit with success
 true
