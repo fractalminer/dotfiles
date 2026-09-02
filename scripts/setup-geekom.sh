@@ -79,11 +79,28 @@ echo '=== Configuring Wake-on-LAN ==='
 
 # Configure every NetworkManager Ethernet connection for magic-packet
 # Wake-on-LAN. This is persistent across boots.
-#
-# Avoid depending on Pop!_OS's generated names ("Wired connection 1",
-# "Wired connection 2"), since another machine may number them
-# differently.
+while IFS=: read -r name type; do
+  [[ "$type" == "802-3-ethernet" ]] || continue
 
+  echo "Enabling WoL on NetworkManager connection: $name"
+  sudo nmcli connection modify "$name" \
+    802-3-ethernet.wake-on-lan magic
+done < <(
+  nmcli -t -f NAME,TYPE connection show
+)
+
+# Apply the changed profile immediately to any currently-connected
+# Ethernet interfaces.
+while IFS=: read -r iface type state; do
+  [[ "$type" == "ethernet" && "$state" == "connected" ]] || continue
+
+  echo "Reapplying NetworkManager connection on: $iface"
+  sudo nmcli device reapply "$iface"
+done < <(
+  nmcli -t -f DEVICE,TYPE,STATE device status
+)
+
+# Verify the live NIC state.
 while IFS=: read -r iface type; do
   [[ "$type" == "ethernet" ]] || continue
 
@@ -93,6 +110,7 @@ while IFS=: read -r iface type; do
 done < <(
   nmcli -t -f DEVICE,TYPE device status
 )
+
 
 echo '=== Disabling automatic suspend on AC power ==='
 
