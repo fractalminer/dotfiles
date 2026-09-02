@@ -244,7 +244,7 @@ rsync_folder ~/.ssh/
 # ---------------------------------------------------------------
 echo 'If this is a build farm worker, run this:'
 echo
-echo '  ./scripts/setup-geekom1.sh'
+echo '  ./scripts/setup-geekom.sh'
 echo
 echo 'Press enter when done...'
 read
