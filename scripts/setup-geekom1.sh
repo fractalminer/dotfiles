@@ -61,6 +61,20 @@ sudo systemctl enable system76-performance.service
 sudo systemctl restart system76-performance.service
 
 
+echo '=== Configuring remote power control ==='
+
+# Allow the build-farm user to power off or reboot the worker remotely
+# without granting unrestricted passwordless sudo.
+sudo tee /etc/sudoers.d/power-control >/dev/null <<EOF
+$USER ALL=(root) NOPASSWD: /usr/bin/systemctl poweroff, /usr/bin/systemctl reboot
+EOF
+
+sudo chmod 0440 /etc/sudoers.d/power-control
+
+# Fail the setup immediately if we somehow generated invalid sudoers syntax.
+sudo visudo -cf /etc/sudoers.d/power-control
+
+
 echo '=== Configuring Wake-on-LAN ==='
 
 # Configure every NetworkManager Ethernet connection for magic-packet
