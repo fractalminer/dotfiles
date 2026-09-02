@@ -58,6 +58,20 @@ sudo apt install git --yes
 # ---------------------------------------------------------------
 # Clone dotfiles.
 # ---------------------------------------------------------------
+get_origin_name() {
+  git remote show origin  \
+    | grep 'Fetch URL'    \
+    | tr '/' ' '          \
+    | awk '{ print $NF }' \
+    | sed 's/\.git//g'
+}
+
+add_gitlab() {
+  local name="$(get_origin_name)"
+  [[ -n "$name" ]]
+  git remote add gitlab ssh://git@gitlab.com/dpacbach/$name
+}
+
 clone_impl() {
   local org="$1"
   local repo="$2"
@@ -65,7 +79,7 @@ clone_impl() {
   [[ -z "$where" ]] && where="$repo"
   [[ -d "$where" ]] && return 0
   git clone ssh://git@github.com/$org/$repo $where --recursive
-  (cd "$where" && fish -c add-gitlab)
+  (cd "$where" && add_gitlab)
 }
 
 clone()    { clone_impl fractalminer   "$@"; }
