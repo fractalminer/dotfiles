@@ -45,6 +45,7 @@ echo "$template_host_ip's ssh password twice."
 # Ensures that both ssh clients and daemons notice when the other
 # end isn't responding and terminate the connection cleanly
 # rather than just freezing.
+sudo mkdir -p /etc/ssh/sshd_config.d
 echo 'ClientAliveInterval 10' | sudo tee    /etc/ssh/sshd_config.d/keepalive.conf
 echo 'ClientAliveCountMax 3'  | sudo tee -a /etc/ssh/sshd_config.d/keepalive.conf
 
