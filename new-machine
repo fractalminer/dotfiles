@@ -121,6 +121,16 @@ clone    moonlib
 clone    redist
 
 # ---------------------------------------------------------------
+# Build moonlib extensions and run tests.
+# ---------------------------------------------------------------
+cd ~/dev/moonlib/ext
+make all
+make install
+
+cd ~/dev/moonlib
+make test
+
+# ---------------------------------------------------------------
 # Source bashlib
 # ---------------------------------------------------------------
 source ~/dev/utilities/bashlib/util.sh
