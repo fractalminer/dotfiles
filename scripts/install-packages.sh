@@ -34,6 +34,7 @@ list="
     haskell-stack
     htop
     iw
+    libboost-all-dev
     libcurl4-openssl-dev
     libdw-dev
     libevent-dev
