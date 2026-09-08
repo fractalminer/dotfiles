@@ -7,6 +7,7 @@ list="
     autoconf
     automake
     bat
+    bear
     bison
     btop
     build-essential
