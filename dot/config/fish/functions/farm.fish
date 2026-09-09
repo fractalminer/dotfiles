@@ -1,3 +1,3 @@
 function farm
-  ~/dev/redist/src/dashboard.sh
+  ~/dev/redist/src/remote-dashboard.sh
 end
