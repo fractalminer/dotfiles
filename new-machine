@@ -123,6 +123,9 @@ clone    redist
 # ---------------------------------------------------------------
 # Build moonlib extensions and run tests.
 # ---------------------------------------------------------------
+cd ~/dev/utilities/building
+./libxdelta3.sh  # dependency of moonlib extention.
+
 cd ~/dev/moonlib/ext
 make all
 make install
