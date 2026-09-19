@@ -103,6 +103,7 @@ list="
     ripgrep
     screenfetch
     silversearcher-ag
+    sqlite3
     subversion
     tigervnc-common
     tigervnc-viewer
