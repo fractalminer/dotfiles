@@ -13,6 +13,7 @@ rocks='
   lunajson
   minicurses
   redis-lua
+  lsqlite3
   lua-zlib
 '
 
