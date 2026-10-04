@@ -40,3 +40,23 @@ if [[ ! -d ~/.luarocks/lib/luarocks/rocks-$lua_version/lua-cityhash ]]; then
 else
   echo "lua-cityhash already installed."
 fi
+
+# Special patch to fix a bug in redis-lua. It is possible that it
+# might be fixed in a future version of the library, but seems
+# unlikely. If that happens, this may start failing.
+{
+  redis_lua="$HOME/.luarocks/share/lua/5.4/redis.lua"
+
+  old='table_insert(parsers, #requests, reply.parser)'
+  new='parsers[#requests] = reply.parser or false'
+
+  if grep -Fq "$new" "$redis_lua"; then
+    echo "redis-lua already patched."
+  elif grep -Fq "$old" "$redis_lua"; then
+    sed -i "s|$old|$new|" "$redis_lua"
+    echo "Patched redis-lua."
+  else
+    echo "error: cannot patch $redis_lua" >&2
+    exit 1
+  fi
+}
