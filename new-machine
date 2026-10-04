@@ -163,6 +163,11 @@ fi
 # ---------------------------------------------------------------
 mkdir -p ~/.local/state/redis
 
+# When we install redis server it will automatically start the
+# system version, which we don't want.
+sudo systemctl stop    redis-server
+sudo systemctl disable redis-server
+
 # ---------------------------------------------------------------
 # Build Hexagon.
 # ---------------------------------------------------------------

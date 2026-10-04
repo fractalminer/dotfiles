@@ -99,7 +99,7 @@ list="
     qtbase5-dev-tools
     qtchooser
     re2c
-    redis-tools
+    redis
     ripgrep
     screenfetch
     silversearcher-ag
