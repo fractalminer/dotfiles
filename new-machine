@@ -169,6 +169,15 @@ sudo systemctl stop    redis-server
 sudo systemctl disable redis-server
 
 # ---------------------------------------------------------------
+# Mask Services.
+# ---------------------------------------------------------------
+# This one we want to mask to prevent it from being started up at
+# all, since it seems to randomly get started up while the ma-
+# chine is running and on some versions of Pop OS it can get
+# stuck spinning 100% cpu.
+sudo systemctl mask --now pop-upgrade.service
+
+# ---------------------------------------------------------------
 # Build Hexagon.
 # ---------------------------------------------------------------
 cd ~/dev/hexagon
